@@ -5,7 +5,8 @@ class PlayScene extends Phaser.Scene {
 
     create() {
         // variabel för att hålla koll på hur många gånger vi spikat oss själva
-        this.spiked = 0;
+        //this.spiked = 0;
+        this.spiked = localStorage.getItem('spiked') || 0;
 
         // ladda spelets bakgrundsbild, statisk
         // setOrigin behöver användas för att den ska ritas från top left
@@ -40,6 +41,38 @@ class PlayScene extends Phaser.Scene {
         this.player = this.physics.add.sprite(50, 300, 'player');
         this.player.setBounce(0.1);
         this.player.setCollideWorldBounds(true);
+
+        this.stars = this.physics.add.group({
+            key: 'star',
+            repeat: 13,
+            setXY: { x: 18, y: 0, stepX: 66 }
+        });
+
+        this.physics.add.collider(this.player, this.platforms);
+        this.physics.add.collider(this.stars, this.platforms);
+        this.physics.add.overlap(this.player, this.stars, collectStar, null, this);
+
+        function collectStar(player, star) {
+
+            star.disableBody(true, true);
+
+            if (this.stars.countActive(true) === 0) {
+
+                this.stars.children.iterate(function (child) {
+
+                    //  Give each star a slightly different bounce
+                    child.setBounceY(Phaser.Math.FloatBetween(0.7, 0.9));
+
+                });
+
+                //  A new batch of stars to collect
+                this.stars.children.iterate(function (child) {
+
+                    child.enableBody(true, child.x, 0, true, true);
+
+                });
+            }
+        }
 
         // skapa en fysik-grupp
         this.spikes = this.physics.add.group({
@@ -155,6 +188,7 @@ class PlayScene extends Phaser.Scene {
     // när spelaren landar på en spik, då körs följande metod
     playerHit(player, spike) {
         this.spiked++;
+        localStorage.setItem('spiked', this.spiked);
         player.setVelocity(0, 0);
         player.setX(50);
         player.setY(300);
