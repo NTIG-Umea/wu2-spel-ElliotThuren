@@ -44,13 +44,32 @@ class PlayScene extends Phaser.Scene {
 
         this.stars = this.physics.add.group({
             key: 'star',
-            repeat: 13,
-            setXY: { x: 18, y: 0, stepX: 66 }
+            repeat: 3,
+            setXY: { x: 160, y: 0, stepX: 220 }
+        });
+
+        this.powerup = this.physics.add.group({
+            key: 'power',
+            setXY: { x: -380, y: -230 }
+        });
+
+        this.stars.children.iterate(function (child) {
+
+            child.setBounceY(Phaser.Math.FloatBetween(0.7, 0.9));
+    
+        });
+
+        this.powerup.children.iterate(function (child) {
+
+            child.setBounceY(Phaser.Math.FloatBetween(0.5, 0.6));
+    
         });
 
         this.physics.add.collider(this.player, this.platforms);
         this.physics.add.collider(this.stars, this.platforms);
+        this.physics.add.collider(this.powerup, this.platforms);
         this.physics.add.overlap(this.player, this.stars, collectStar, null, this);
+        this.physics.add.overlap(this.player, this.powerup, collectPower, null, this);
 
         function collectStar(player, star) {
 
@@ -60,18 +79,28 @@ class PlayScene extends Phaser.Scene {
 
                 this.stars.children.iterate(function (child) {
 
-                    //  Give each star a slightly different bounce
                     child.setBounceY(Phaser.Math.FloatBetween(0.7, 0.9));
 
                 });
 
                 //  A new batch of stars to collect
-                this.stars.children.iterate(function (child) {
+                this.powerup.children.iterate(function (child) {
 
-                    child.enableBody(true, child.x, 0, true, true);
+                    child.enableBody(true, 380, 255, true, true);
 
                 });
             }
+        }
+
+        function collectPower(player, powerup) {
+
+            powerup.disableBody(true, true);
+            this.player.setTint(0xFF0059)
+            this.player.setScale(2,2);
+            //if (this.powerup.countActive(true) === 0) {
+//
+  //              this.powerup
+    //        }
         }
 
         // skapa en fysik-grupp
