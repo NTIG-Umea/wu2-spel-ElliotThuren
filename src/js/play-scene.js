@@ -53,6 +53,11 @@ class PlayScene extends Phaser.Scene {
             setXY: { x: -380, y: -230 }
         });
 
+        this.powerup2 = this.physics.add.group({
+            key: 'power2',
+            setXY: { x: -680, y: -230 }
+        });
+
         this.stars.children.iterate(function (child) {
 
             child.setBounceY(Phaser.Math.FloatBetween(0.7, 0.9));
@@ -65,11 +70,19 @@ class PlayScene extends Phaser.Scene {
     
         });
 
+        this.powerup2.children.iterate(function (child) {
+
+            child.setBounceY(Phaser.Math.FloatBetween(0.5, 0.6));
+    
+        });
+
         this.physics.add.collider(this.player, this.platforms);
         this.physics.add.collider(this.stars, this.platforms);
         this.physics.add.collider(this.powerup, this.platforms);
+        this.physics.add.collider(this.powerup2, this.platforms);
         this.physics.add.overlap(this.player, this.stars, collectStar, null, this);
         this.physics.add.overlap(this.player, this.powerup, collectPower, null, this);
+        this.physics.add.overlap(this.player, this.powerup2, collectPower2, null, this);
 
         function collectStar(player, star) {
 
@@ -89,6 +102,11 @@ class PlayScene extends Phaser.Scene {
                     child.enableBody(true, 380, 255, true, true);
 
                 });
+                this.powerup2.children.iterate(function (child) {
+
+                    child.enableBody(true, 380, 100, true, true);
+
+                });
             }
         }
 
@@ -97,10 +115,15 @@ class PlayScene extends Phaser.Scene {
             powerup.disableBody(true, true);
             this.player.setTint(0xFF0059)
             this.player.setScale(2,2);
-            //if (this.powerup.countActive(true) === 0) {
-//
-  //              this.powerup
-    //        }
+            this.player.setBounce(0.1);
+        }
+
+        function collectPower2(player, powerup2) {
+
+            powerup2.disableBody(true, true);
+            this.player.setTint(0xF4FF00)
+            this.player.setBounce(1.2);
+            this.player.setScale(0.5,0.5);
         }
 
         // skapa en fysik-grupp
