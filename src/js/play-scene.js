@@ -113,7 +113,7 @@ class PlayScene extends Phaser.Scene {
         function collectPower(player, powerup) {
 
             powerup.disableBody(true, true);
-            this.player.setTint(0xFF0059)
+            this.player.setTint(0xFF00E7)
             this.player.setScale(2,2);
             this.player.setBounce(0.1);
         }
