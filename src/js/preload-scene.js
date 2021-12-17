@@ -7,7 +7,7 @@ class PreloadScene extends Phaser.Scene {
         // säg åt phaser att lägga till /assets i alla paths
         this.load.setBaseURL('/assets');
         this.load.image('background', '/images/background.png');
-        this.load.image('star', 'images/star.png');
+        this.load.image('star', 'images/Donut.png');
         this.load.image('power', 'images/candy.png');
         this.load.image('power2', 'images/powerstar.png');
         this.load.image('spike', '/images/spike.png');
