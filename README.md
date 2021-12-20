@@ -15,7 +15,7 @@ Min gamla planering som jag skrev ovan funkade inte riktigt för mig för att de
 # Post-Mortem
 
 * Titel: Somer Himpson
-* Tagline: Ät donuts i det meningslösa spelet "Somer Himpson"!
+* Tagline: Ät donuts och akta dig för spikar i spelet "Somer Himpson"!
 * Inledning
     - Syftet med denna uppgift är att skapa ett vinterspel i sammarbete med ES20. När vi skapar detta spel så lär vi oss lite om hur spel utvecklare jobbar om vardagen
     - När vi funderade på vad spelet skulle handla om så kom vi fram till en massa kloka ideér. Men sen när jag skulle börja koda så viste jag inte riktigt hur jag skulle börja, så jag började bara att implementerade saker från andra projekt som jag har. Sedan har jag bara lekt runt lite med koden och när vi fick lite assets från ES20 så implementerade jag det också. Jag har även photoshoppat dem lite och gjort egna assets.
